@@ -39,8 +39,9 @@ export default class Product extends Component {
                   {title}
                 </p>
                 <h5 className="text-blue font-italic mb-0">
-                  <span className="mr-1">$</span>
                   {price}
+                  <span className="mr-1"> €</span>
+                  
                 </h5>
           </div>
 
@@ -51,7 +52,7 @@ export default class Product extends Component {
 }
 
 Product.propTypes = {
-  product:PropTypes.shape({
+  product: PropTypes.shape({
     id:PropTypes.number,
     img:PropTypes.string,
     title:PropTypes.string,
