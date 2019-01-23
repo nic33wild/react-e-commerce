@@ -15,7 +15,7 @@ class ProductProvider extends Component {
   componentDidMount() {
     this.setProducts();
   }
-//Set products passa una copia dello stato riempita con i valori per evitare di passarli per reference
+  //Set products passa una copia dello stato riempita con i valori per evitare di passarli per reference
   setProducts = () => {
     let tempProducts = [];
     storeProducts.forEach(elemento => {
@@ -27,11 +27,19 @@ class ProductProvider extends Component {
     });
   };
 
-  handleDetail = () => {
-    console.log("hrllo from detail");
+  getItem = id => {
+    const product = this.state.products.find(item => item.id === id);
+    return product;
   };
 
-  addToCart = (id) => {
+  handleDetail = id => {
+    const product = this.getItem(id);
+    this.setState(() => {
+      return { detailProduct: product };
+    });
+  };
+
+  addToCart = id => {
     console.log(`hello from add to cart. id is ${id}`);
   };
 
