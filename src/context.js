@@ -10,9 +10,12 @@ class ProductProvider extends Component {
   state = {
     products: [],
     detailProduct: detailProduct,
-    cart:[],
+    cart: storeProducts,
     modalOpen: false,
-    modalProduct: detailProduct
+    modalProduct: detailProduct,
+    cartSubTotal: 0,
+    cartTax: 0,
+    cartTotal: 0
   };
 
   componentDidMount() {
@@ -50,23 +53,44 @@ class ProductProvider extends Component {
     product.count = 1;
     const price = product.price;
     product.total = price;
+    this.setState(
+      () => {
+        return { products: tempProducts, cart: [...this.state.cart, product] };
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
+  };
+
+  openModal = id => {
+    const product = this.getItem(id);
     this.setState(() => {
-        return {products: tempProducts, cart:[...this.state.cart,product]};
-    },() => {console.log(this.state);
+      return { modalProduct: product, modalOpen: true };
     });
   };
 
-  openModal = id =>{
-      const product = this.getItem(id);
-      this.setState(()=>{
-        return {modalProduct: product, modalOpen:true}
-      })
+  closeModal = () => {
+    this.setState(() => {
+      return { modalOpen: false };
+    });
+  };
+
+  increment = (id) => {
+    console.log('this is increment method');
   }
 
-  closeModal = () =>{
-    this.setState(()=>{
-        return {modalOpen:false}
-    })
+  decrement = (id) => {
+    console.log('this is decrement method');
+  }
+
+  removeItem = (id) => {
+    console.log('item removed');
+  }
+
+  clearCart = () => {
+    console.log('cart was cleared');
+    
   }
 
   render() {
@@ -76,8 +100,12 @@ class ProductProvider extends Component {
           ...this.state,
           handleDetail: this.handleDetail,
           addToCart: this.addToCart,
-          openModal:this.openModal,
-          closeModal:this.closeModal
+          openModal: this.openModal,
+          closeModal: this.closeModal,
+          increment :this.increment,
+          decrement: this.decrement,
+          removeItem: this.removeItem,
+          clearCart: this.clearCart
         }}
       >
         {this.props.children}
