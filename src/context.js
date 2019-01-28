@@ -76,37 +76,41 @@ class ProductProvider extends Component {
     });
   };
 
-  increment = (id) => {
-    console.log('this is increment method');
-  }
+  increment = id => {
+    console.log("this is increment method");
+  };
 
-  decrement = (id) => {
-    console.log('this is decrement method');
-  }
+  decrement = id => {
+    console.log("this is decrement method");
+  };
 
-  removeItem = (id) => {
-    console.log('item removed');
-  }
+  removeItem = id => {
+    console.log("item removed");
+  };
 
   clearCart = () => {
-    console.log('cart was cleared');
-    
-  }
+    this.setState(() => {
+      return { cart: [] };
+    },()=>{
+      this.setProducts();//set Products to default
+      this.addTotals();
+    });
+  };
 
   addTotals = () => {
     let subTotal = 0;
-    this.state.cart.map(item =>(subTotal += item.total));
-    const tempTax = subTotal * 0.1;//10% tax
-    const tax = parseFloat(tempTax.toFixed(2));//with 2 decimals
-    const total = subTotal + tax
-    this.setState(()=>{
+    this.state.cart.map(item => (subTotal += item.total));
+    const tempTax = subTotal * 0.1; //10% tax
+    const tax = parseFloat(tempTax.toFixed(2)); //with 2 decimals
+    const total = subTotal + tax;
+    this.setState(() => {
       return {
-        cartSubTotal:subTotal,
-        cartTax:tax,
-        cartTotal:total
-      }
-    })
-  }
+        cartSubTotal: subTotal,
+        cartTax: tax,
+        cartTotal: total
+      };
+    });
+  };
 
   render() {
     return (
@@ -117,7 +121,7 @@ class ProductProvider extends Component {
           addToCart: this.addToCart,
           openModal: this.openModal,
           closeModal: this.closeModal,
-          increment :this.increment,
+          increment: this.increment,
           decrement: this.decrement,
           removeItem: this.removeItem,
           clearCart: this.clearCart
