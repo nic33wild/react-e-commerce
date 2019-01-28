@@ -77,7 +77,23 @@ class ProductProvider extends Component {
   };
 
   increment = id => {
-    console.log("this is increment method");
+    let tempCart = [...this.state.cart];
+    const selectedProduct = tempCart.find(item => item.id === id);
+
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index];
+
+    product.count = product.count + 1;
+    product.total = product.count * product.price;
+
+    this.setState(
+      () => {
+        return { cart: [...tempCart] };
+      },
+      () => {
+        this.addTotals();
+      }
+    );
   };
 
   decrement = id => {
@@ -85,16 +101,39 @@ class ProductProvider extends Component {
   };
 
   removeItem = id => {
-    console.log("item removed");
+    let tempProducts = [...this.state.products];
+    let tempCart = [...this.state.cart];
+    tempCart = tempCart.filter(item => item.id !== id);
+
+    const index = tempProducts.indexOf(this.getItem(id));
+    let removedProduct = tempProducts[index];
+    removedProduct.inCart = false;
+    removedProduct.count = 0;
+    removedProduct.total = 0;
+
+    this.setState(
+      () => {
+        return {
+          cart: [...tempCart],
+          products: [...tempProducts]
+        };
+      },
+      () => {
+        this.addTotals();
+      }
+    );
   };
 
   clearCart = () => {
-    this.setState(() => {
-      return { cart: [] };
-    },()=>{
-      this.setProducts();//set Products to default
-      this.addTotals();
-    });
+    this.setState(
+      () => {
+        return { cart: [] };
+      },
+      () => {
+        this.setProducts(); //set Products to default
+        this.addTotals();
+      }
+    );
   };
 
   addTotals = () => {
