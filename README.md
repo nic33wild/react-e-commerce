@@ -1,3 +1,6 @@
+Deployed in Netlify: https://test-react-phone-store.netlify.com
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
